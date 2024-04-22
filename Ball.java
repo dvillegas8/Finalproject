@@ -13,9 +13,11 @@ public class Ball {
     private int dx;
     final private int LENGTH = 0;
     final private int WIDTH = 0;
+    private AirHockeyViewer window;
     // Constructor
     public Ball(int y, int x, int dy, int dx, int radius, Color color){
         // Initialize variables
+        this.window = window;
         this.y = y;
         this.x = x;
         this.dy = dy;
@@ -27,6 +29,19 @@ public class Ball {
         // Draw the ball
         g.setColor(color);
         g.fillOval(x - radius, y - radius, 2 * radius, 2 * radius);
+    }
+    public void move(){
+        x += dx;
+        y +=dy;
+    }
+    // Makes ball bounce from the sides of the screen
+    public void bounce(){
+        if(x <= 0 || x + (2 * radius) >= AirHockeyViewer.WINDOW_WIDTH){
+            dx *= -1;
+        }
+        if(y <= AirHockeyViewer.TITLE_BAR_HEIGHT || y + (2* radius) >= AirHockeyViewer.WINDOW_HEIGHT){
+            dy *= -1;
+        }
     }
 
 }

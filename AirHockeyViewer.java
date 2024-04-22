@@ -2,15 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AirHockeyViewer extends JFrame {
-    final private int WINDOW_WIDTH = 500;
-    final private int WINDOW_HEIGHT = 900;
+    public static final int WINDOW_WIDTH = 500;
+    public static final int WINDOW_HEIGHT = 900;
+    public static final int TITLE_BAR_HEIGHT = 30;
     private AirHockey game;
     final private String title = "AirHockey";
-    private Ball ball;
-    public AirHockeyViewer(AirHockey g, Ball ball){
+    private Image airHockeyBackground;
+    public AirHockeyViewer(AirHockey g){
         // Initialize Instance Variables
         game = g;
-        this.ball = ball;
+        this.airHockeyBackground = new ImageIcon("AirHockeyBackground.jpg").getImage();
         // Initialize window
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle(title);
@@ -21,7 +22,15 @@ public class AirHockeyViewer extends JFrame {
         // Clear the window.
         g.setColor(Color.white);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        // Draw background
+        g.drawImage(airHockeyBackground, 0, 0, this);
         // Draw ball
-        ball.draw(g);
+        game.getBall().draw(g);
+    }
+    public Image getAirHockeyBackground(){
+        return airHockeyBackground;
+    }
+    public void setAirHockeyBackground(Image g){
+        airHockeyBackground = g;
     }
 }
