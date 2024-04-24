@@ -3,8 +3,8 @@ import java.awt.*;
 
 public class AirHockeyViewer extends JFrame {
     public static final int WINDOW_WIDTH = 500;
-    public static final int WINDOW_HEIGHT = 900;
-    public static final int TITLE_BAR_HEIGHT = 30;
+    public static final int WINDOW_HEIGHT = 800;
+    public static final int TITLE_BAR_HEIGHT = 40;
     private AirHockey game;
     final private String title = "AirHockey";
     private Image airHockeyBackground;
