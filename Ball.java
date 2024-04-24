@@ -36,10 +36,10 @@ public class Ball {
     }
     // Makes ball bounce from the sides of the screen
     public void bounce(){
-        if(x <= 0 || x + (radius) >= AirHockeyViewer.WINDOW_WIDTH){
+        if(x <= 0 || x + radius >= AirHockeyViewer.WINDOW_WIDTH){
             dx *= -1;
         }
-        if(y <= AirHockeyViewer.TITLE_BAR_HEIGHT || y + (radius) >= AirHockeyViewer.WINDOW_HEIGHT){
+        if(y <= AirHockeyViewer.TITLE_BAR_HEIGHT || y + radius >= AirHockeyViewer.WINDOW_HEIGHT){
             dy *= -1;
         }
     }
