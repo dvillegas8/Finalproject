@@ -17,10 +17,11 @@ public class AirHockey implements ActionListener, KeyListener {
         // Initialize instance variables
         oneScore = 0;
         twoScore = 0;
-        one = new Paddle(225, 250, 5, 5, 20, Color.RED);
-        two = new Paddle(675, 250, 5, 5, 20, Color.BLUE);
+        one = new Paddle(225, 250, 20, 20, 20, Color.RED);
+        two = new Paddle(675, 250, 20, 20, 20, Color.BLUE);
         ball = new Ball(400, 200, 15, 15, 10, Color.BLACK);
         window = new AirHockeyViewer(this);
+        window.addKeyListener(this);
     }
     // Method for movement of the paddles
     public void keyTyped(KeyEvent e) {
@@ -39,16 +40,36 @@ public class AirHockey implements ActionListener, KeyListener {
         switch(e.getKeyCode()){
             // Move right for paddle one
             case KeyEvent.VK_D:
-                    one.setX(one.getX() + one.getDX());
+                one.setX(one.getX() + one.getDX());
+                break;
             // Move left for paddle one
             case KeyEvent.VK_A:
-                    one.setX(one.getX() - one.getDX());
+                one.setX(one.getX() - one.getDX());
+                break;
             // Move up for paddle one
             case KeyEvent.VK_W:
-                    one.setY(one.getY() - one.getDY());
+                one.setY(one.getY() - one.getDY());
+                break;
             // Move down for paddle one
             case KeyEvent.VK_S:
-                    one.setY(one.getY() + one.getDY());
+                one.setY(one.getY() + one.getDY());
+                break;
+            // Move right for paddle two
+            case KeyEvent.VK_RIGHT:
+                two.setX(two.getX() + two.getDX());
+                break;
+            // Move left for paddle two
+            case KeyEvent.VK_LEFT:
+                two.setX(two.getX() - two.getDX());
+                break;
+            // Move up for paddle two
+            case KeyEvent.VK_UP:
+                two.setY(two.getY() - two.getDY());
+                break;
+            // Move down for paddle two
+            case KeyEvent.VK_DOWN:
+                two.setY(two.getY() + two.getDY());
+                break;
         }
     }
     // Runs this method of 100 milliseconds to check if the ball needs to bounce
@@ -77,5 +98,11 @@ public class AirHockey implements ActionListener, KeyListener {
     }
     public void setPaddleOne(Paddle one){
         this.one = one;
+    }
+    public Paddle getPaddleTwo(){
+        return two;
+    }
+    public void setPaddleTwo(Paddle two){
+        this.two = two;
     }
 }

@@ -26,7 +26,9 @@ public class AirHockeyViewer extends JFrame {
         g.drawImage(airHockeyBackground, 0, 0, this);
         // Draw ball
         game.getBall().draw(g);
+        // Draw both paddles
         game.getPaddleOne().draw(g);
+        game.getPaddleTwo().draw(g);
     }
     public Image getAirHockeyBackground(){
         return airHockeyBackground;

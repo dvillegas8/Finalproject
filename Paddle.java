@@ -32,7 +32,7 @@ public class Paddle{
     public int getY(){
         return y;
     }
-    public void setY(int Y){
+    public void setY(int y){
         this.y = y;
     }
     public int getDX(){
