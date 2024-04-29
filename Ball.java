@@ -17,7 +17,6 @@ public class Ball {
     // Constructor
     public Ball(int y, int x, int dy, int dx, int radius, Color color){
         // Initialize variables
-        this.window = window;
         this.y = y;
         this.x = x;
         this.dy = dy;
@@ -36,10 +35,10 @@ public class Ball {
     }
     // Makes ball bounce from the sides of the screen
     public void bounce(){
-        if(x <= 0 || x + radius >= AirHockeyViewer.WINDOW_WIDTH){
+        if(x - radius <= 0 || x + radius >= AirHockeyViewer.WINDOW_WIDTH){
             dx *= -1;
         }
-        if(y <= AirHockeyViewer.TITLE_BAR_HEIGHT || y + radius >= AirHockeyViewer.WINDOW_HEIGHT){
+        if(y - radius <= AirHockeyViewer.TITLE_BAR_HEIGHT || y + radius >= AirHockeyViewer.WINDOW_HEIGHT){
             dy *= -1;
         }
     }

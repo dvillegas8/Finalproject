@@ -17,9 +17,9 @@ public class AirHockey implements ActionListener, KeyListener {
         // Initialize instance variables
         oneScore = 0;
         twoScore = 0;
-        one = new Paddle(225, 250, 20, 20, 20, Color.RED);
-        two = new Paddle(675, 250, 20, 20, 20, Color.BLUE);
-        ball = new Ball(400, 200, 15, 15, 10, Color.BLACK);
+        one = new Paddle(220, 240, 20, 20, 20, Color.RED);
+        two = new Paddle(680, 240, 20, 20, 20, Color.BLUE);
+        ball = new Ball(400, 200, 10, 10, 10, Color.BLACK);
         window = new AirHockeyViewer(this);
         window.addKeyListener(this);
     }
@@ -40,35 +40,35 @@ public class AirHockey implements ActionListener, KeyListener {
         switch(e.getKeyCode()){
             // Move right for paddle one
             case KeyEvent.VK_D:
-                one.setX(one.getX() + one.getDX());
+                one.moveRight();
                 break;
             // Move left for paddle one
             case KeyEvent.VK_A:
-                one.setX(one.getX() - one.getDX());
+                one.moveLeft();
                 break;
             // Move up for paddle one
             case KeyEvent.VK_W:
-                one.setY(one.getY() - one.getDY());
+                one.moveUp();
                 break;
             // Move down for paddle one
             case KeyEvent.VK_S:
-                one.setY(one.getY() + one.getDY());
+                one.moveDown();
                 break;
             // Move right for paddle two
             case KeyEvent.VK_RIGHT:
-                two.setX(two.getX() + two.getDX());
+                two.moveRight();
                 break;
             // Move left for paddle two
             case KeyEvent.VK_LEFT:
-                two.setX(two.getX() - two.getDX());
+                two.moveLeft();
                 break;
             // Move up for paddle two
             case KeyEvent.VK_UP:
-                two.setY(two.getY() - two.getDY());
+                two.moveUp();
                 break;
             // Move down for paddle two
             case KeyEvent.VK_DOWN:
-                two.setY(two.getY() + two.getDY());
+                two.moveDown();
                 break;
         }
     }

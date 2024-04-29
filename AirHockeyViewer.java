@@ -4,7 +4,7 @@ import java.awt.*;
 public class AirHockeyViewer extends JFrame {
     public static final int WINDOW_WIDTH = 900;
     public static final int WINDOW_HEIGHT = 500;
-    public static final int TITLE_BAR_HEIGHT = 39;
+    public static final int TITLE_BAR_HEIGHT = 24;
     private AirHockey game;
     final private String title = "AirHockey";
     private Image airHockeyBackground;

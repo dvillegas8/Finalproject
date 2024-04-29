@@ -18,6 +18,27 @@ public class Paddle{
         this.radius = radius;
         this.color = color;
     }
+    // Movement methods for paddles, checks if it goes outside the window first
+    public void moveUp() {
+        if (y - radius >= AirHockeyViewer.TITLE_BAR_HEIGHT) {
+            y -= dy;
+        }
+    }
+    public void moveDown(){
+        if (y + (2 * radius) <= AirHockeyViewer.WINDOW_HEIGHT) {
+            y += dy;
+        }
+    }
+    public void moveRight(){
+        if(x + (2 * radius) <= AirHockeyViewer.WINDOW_WIDTH){
+            x += dx;
+        }
+    }
+    public void moveLeft(){
+        if(x - (2 * radius) >= 0){
+            x -= dx;
+        }
+    }
     public void draw(Graphics g){
         // Draw paddle
         g.setColor(color);
