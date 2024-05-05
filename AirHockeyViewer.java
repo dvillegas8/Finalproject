@@ -11,7 +11,7 @@ public class AirHockeyViewer extends JFrame {
     public AirHockeyViewer(AirHockey g){
         // Initialize Instance Variables
         game = g;
-        this.airHockeyBackground = new ImageIcon("AirHockeyHBackground.jpg").getImage();
+        this.airHockeyBackground = new ImageIcon("AirHockeyTable.jpg").getImage();
         // Initialize window
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle(title);
@@ -29,6 +29,9 @@ public class AirHockeyViewer extends JFrame {
         // Draw both paddles
         game.getPaddleOne().draw(g);
         game.getPaddleTwo().draw(g);
+        // Draw Goals
+        game.getLeftGoal().draw(g);
+        game.getRightGoal().draw(g);
         // draw contact point as circle
         if(game.getPaddleOne().isContact(game.getBall().getX(), game.getBall().getY(), game.getBall().getRadius())){
             g.setColor(Color.YELLOW);

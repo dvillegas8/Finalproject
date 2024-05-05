@@ -11,6 +11,8 @@ public class AirHockey implements ActionListener, KeyListener {
     private Paddle one;
     private Paddle two;
     private Ball ball;
+    private Goal leftgoal;
+    private Goal rightgoal;
     private static final int SLEEP_TIME = 100;
     private AirHockeyViewer window;
     public AirHockey(){
@@ -19,7 +21,9 @@ public class AirHockey implements ActionListener, KeyListener {
         twoScore = 0;
         one = new Paddle(220, 240, 20, 20, 20, Color.RED);
         two = new Paddle(680, 240, 20, 20, 20, Color.BLUE);
-        ball = new Ball(400, 200, 10, 10, 10, Color.BLACK);
+        ball = new Ball(400, 200, 10, 10, 10, Color.WHITE);
+        leftgoal = new Goal(0, 175, 5, 165, Color.WHITE);
+        rightgoal = new Goal(AirHockeyViewer.WINDOW_WIDTH - 5, 177, 5, 165, Color.WHITE);
         window = new AirHockeyViewer(this);
         window.addKeyListener(this);
     }
@@ -77,10 +81,10 @@ public class AirHockey implements ActionListener, KeyListener {
         ball.move();
         ball.bounce();
         if(one.isContact(ball.getX(), ball.getY(), ball.getRadius())){
-            System.out.println("YES");
+            System.out.println("hit");
         }
         if(two.isContact(ball.getX(), ball.getY(), ball.getRadius())){
-            System.out.println("YES");
+            System.out.println("hit");
         }
         window.repaint();
     }
@@ -108,6 +112,18 @@ public class AirHockey implements ActionListener, KeyListener {
         double angle = Math.atan((double) ball.getDY() / ball.getDX());
 
     }
+    // Checks if a goal is scored
+    public boolean isGoal(){
+        if(ball.getX() - ball.getDX() <= leftgoal.getWidth() && ball.getY() >= leftgoal.getY() && ball.getY() <= leftgoal.getLength() + leftgoal.getY()){
+            twoScore += 1;
+            return true;
+        }
+        else if(ball.getX() + ball.getRadius() >= rightgoal.getX() && ball.getY() >= rightgoal.getY() && ball.getY() <= rightgoal.getY() + rightgoal.getLength()){
+            oneScore += 1;
+            return true;
+        }
+        return false;
+    }
 
     public Ball getBall(){
         return ball;
@@ -126,5 +142,11 @@ public class AirHockey implements ActionListener, KeyListener {
     }
     public void setPaddleTwo(Paddle two){
         this.two = two;
+    }
+    public Goal getLeftGoal(){
+        return leftgoal;
+    }
+    public Goal getRightGoal(){
+        return rightgoal;
     }
 }
