@@ -39,6 +39,11 @@ public class Paddle{
             x -= dx;
         }
     }
+    public boolean isContact(int x, int y, int radius){
+        double dx = (x - this.x) * (x - this.x);
+        double dy = (y - this.y) * (y - this.y);
+        return Math.sqrt(dx + dy) <= this.radius + radius;
+    }
     public void draw(Graphics g){
         // Draw paddle
         g.setColor(color);
@@ -67,5 +72,8 @@ public class Paddle{
     }
     public void setDY(int dy){
         this.dy = dy;
+    }
+    public int getRadius(){
+        return radius;
     }
 }

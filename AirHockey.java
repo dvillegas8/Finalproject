@@ -76,6 +76,12 @@ public class AirHockey implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         ball.move();
         ball.bounce();
+        if(one.isContact(ball.getX(), ball.getY(), ball.getRadius())){
+            System.out.println("YES");
+        }
+        if(two.isContact(ball.getX(), ball.getY(), ball.getRadius())){
+            System.out.println("YES");
+        }
         window.repaint();
     }
     public void game(){
@@ -87,6 +93,22 @@ public class AirHockey implements ActionListener, KeyListener {
         clock.start();
         game.game();
     }
+    // finds collision point x coordinate
+    public float getContactX(){
+        float x = (float) ((one.getRadius() * ball.getX()) + (ball.getRadius() * one.getX())) / (ball.getRadius() + one.getRadius());
+        return x;
+    }
+    // finds collision point y coordinate
+    public float getContactY(){
+        float y = (float) ((one.getRadius() * ball.getY()) + (ball.getRadius() * one.getY())) / (ball.getRadius() + one.getRadius());
+        return y;
+    }
+    public void newDX(){
+        double velocity = Math.sqrt((ball.getDX() * ball.getDX()) + (ball.getDY() * ball.getDY()));
+        double angle = Math.atan((double) ball.getDY() / ball.getDX());
+
+    }
+
     public Ball getBall(){
         return ball;
     }
