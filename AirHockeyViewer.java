@@ -32,12 +32,20 @@ public class AirHockeyViewer extends JFrame {
         // Draw Goals
         game.getLeftGoal().draw(g);
         game.getRightGoal().draw(g);
-        // draw contact point as circle
+        // draw contact point for paddle one
         if(game.getPaddleOne().isContact(game.getBall().getX(), game.getBall().getY(), game.getBall().getRadius())){
             g.setColor(Color.YELLOW);
-            g.fillOval((int) (game.getContactX() - 2.5), (int) (game.getContactY() - 2.5), 5, 5);
+            System.out.println(game.getContactX(game.getPaddleOne()));
+            System.out.println(game.getContactY(game.getPaddleOne()));
+            g.fillOval((int) (game.getContactX(game.getPaddleOne()) - 2.5), (int) (game.getContactY(game.getPaddleOne()) - 2.5), 5, 5);
+        }
+        // Draw contact point for paddle two
+        if(game.getPaddleTwo().isContact(game.getBall().getX(), game.getBall().getY(), game.getBall().getRadius())){
+            g.setColor(Color.YELLOW);
+            g.fillOval((int) (game.getContactX(game.getPaddleTwo()) - 2.5), (int) (game.getContactY(game.getPaddleTwo()) - 2.5), 5, 5);
         }
     }
+    // Getter and Setters
     public Image getAirHockeyBackground(){
         return airHockeyBackground;
     }

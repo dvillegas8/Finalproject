@@ -1,10 +1,9 @@
 import java.awt.*;
 
 public class Ball {
-    // Coordinates
+    // Instance variables
     private int y;
     private int x;
-    // Initial Coordinates
     final private int STARTING_X = 0;
     final private int STARTING_Y = 0;
     private int radius;
@@ -24,26 +23,33 @@ public class Ball {
         this.radius = radius;
         this.color = color;
     }
+    // Draw the ball
     public void draw(Graphics g){
-        // Draw the ball
         g.setColor(color);
         g.fillOval(x - radius, y - radius, 2 * radius, 2 * radius);
     }
+    // Move the ball
     public void move(){
         x += dx;
-        y +=dy;
+        y += dy;
     }
     // Makes ball bounce from the sides of the screen
     public void bounce(){
+        // Bounce off the left and right side
         if((x - radius <= 0 && dx < 0 )|| (x + radius >= AirHockeyViewer.WINDOW_WIDTH && dx > 0)){
             dx *= -1;
         }
+        // bounce off the top and bottom side
         if((y - radius <= AirHockeyViewer.TITLE_BAR_HEIGHT && dy < 0) || y + radius >= AirHockeyViewer.WINDOW_HEIGHT && dy > 0){
             dy *= -1;
         }
     }
+    // Getter and Setters
     public int getX(){
         return x;
+    }
+    public void collisionPointTopLeft(){
+
     }
     public int getDX(){
         return dx;

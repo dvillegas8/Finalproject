@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class AirHockey implements ActionListener, KeyListener {
+    // Instance variables
     private int oneScore;
     private int twoScore;
     private Paddle one;
@@ -15,13 +16,14 @@ public class AirHockey implements ActionListener, KeyListener {
     private Goal rightgoal;
     private static final int SLEEP_TIME = 100;
     private AirHockeyViewer window;
+    // Constructor
     public AirHockey(){
         // Initialize instance variables
         oneScore = 0;
         twoScore = 0;
         one = new Paddle(220, 240, 20, 20, 20, Color.RED);
         two = new Paddle(680, 240, 20, 20, 20, Color.BLUE);
-        ball = new Ball(400, 200, 10, 10, 10, Color.WHITE);
+        ball = new Ball(400, 200, 0, 0, 10, Color.WHITE);
         leftgoal = new Goal(0, 175, 5, 165, Color.WHITE);
         rightgoal = new Goal(AirHockeyViewer.WINDOW_WIDTH - 5, 177, 5, 165, Color.WHITE);
         window = new AirHockeyViewer(this);
@@ -38,7 +40,7 @@ public class AirHockey implements ActionListener, KeyListener {
         // Nothing required for this program.
         // However, as a KeyListener, this class must supply this method
     }
-
+    // Get user input
     @Override
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()){
@@ -76,7 +78,7 @@ public class AirHockey implements ActionListener, KeyListener {
                 break;
         }
     }
-    // Runs this method of 100 milliseconds to check if the ball needs to bounce
+    // Runs this method every 100 milliseconds
     public void actionPerformed(ActionEvent e) {
         ball.move();
         ball.bounce();
@@ -88,23 +90,14 @@ public class AirHockey implements ActionListener, KeyListener {
         }
         window.repaint();
     }
-    public void game(){
-        window.repaint();
-    }
-    public static void main(String[] args) {
-        AirHockey game = new AirHockey();
-        Timer clock = new Timer(SLEEP_TIME, game);
-        clock.start();
-        game.game();
-    }
     // finds collision point x coordinate
-    public float getContactX(){
-        float x = (float) ((one.getRadius() * ball.getX()) + (ball.getRadius() * one.getX())) / (ball.getRadius() + one.getRadius());
+    public float getContactX(Paddle paddle){
+        float x = (float) ((paddle.getRadius() * ball.getX()) + (ball.getRadius() * paddle.getX())) / (ball.getRadius() + paddle.getRadius());
         return x;
     }
     // finds collision point y coordinate
-    public float getContactY(){
-        float y = (float) ((one.getRadius() * ball.getY()) + (ball.getRadius() * one.getY())) / (ball.getRadius() + one.getRadius());
+    public float getContactY(Paddle paddle){
+        float y = (float) ((paddle.getRadius() * ball.getY()) + (ball.getRadius() * paddle.getY())) / (ball.getRadius() + paddle.getRadius());
         return y;
     }
     public void newDX(){
@@ -124,7 +117,16 @@ public class AirHockey implements ActionListener, KeyListener {
         }
         return false;
     }
-
+    public void game(){
+        window.repaint();
+    }
+    // Main
+    public static void main(String[] args) {
+        AirHockey game = new AirHockey();
+        Timer clock = new Timer(SLEEP_TIME, game);
+        clock.start();
+        game.game();
+    }
     public Ball getBall(){
         return ball;
     }
