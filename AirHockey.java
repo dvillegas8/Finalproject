@@ -14,8 +14,12 @@ public class AirHockey implements ActionListener, KeyListener {
     private Ball ball;
     private Goal leftgoal;
     private Goal rightgoal;
-    private static final int SLEEP_TIME = 100;
+    private static final int SLEEP_TIME = 20;
     private AirHockeyViewer window;
+    private long time;
+    private long timeTwo;
+    private long timeThree;
+    private long timeFour;
     // Constructor
     public AirHockey(){
         // Initialize instance variables
@@ -23,9 +27,11 @@ public class AirHockey implements ActionListener, KeyListener {
         twoScore = 0;
         one = new Paddle(220, 240, 20, 20, 20, Color.RED);
         two = new Paddle(680, 240, 20, 20, 20, Color.BLUE);
-        ball = new Ball(400, 200, 0, 0, 10, Color.WHITE);
+        ball = new Ball(400, 200, 4, 4, 10, Color.WHITE);
         leftgoal = new Goal(0, 175, 5, 165, Color.WHITE);
         rightgoal = new Goal(AirHockeyViewer.WINDOW_WIDTH - 5, 177, 5, 165, Color.WHITE);
+        time = System.currentTimeMillis();
+        timeTwo = System.currentTimeMillis();
         window = new AirHockeyViewer(this);
         window.addKeyListener(this);
     }
@@ -83,10 +89,18 @@ public class AirHockey implements ActionListener, KeyListener {
         ball.move();
         ball.bounce();
         if(one.isContact(ball.getX(), ball.getY(), ball.getRadius())){
-            System.out.println("hit");
+            timeThree = System.currentTimeMillis();
+            if(timeThree - time >= 500){
+                collide(one);
+                time = timeThree;
+            }
         }
         if(two.isContact(ball.getX(), ball.getY(), ball.getRadius())){
-            System.out.println("hit");
+            timeFour = System.currentTimeMillis();
+            if(timeFour - timeTwo >= 500){
+                collide(two);
+                timeTwo = timeFour;
+            }
         }
         window.repaint();
     }
@@ -100,14 +114,9 @@ public class AirHockey implements ActionListener, KeyListener {
         float y = (float) ((paddle.getRadius() * ball.getY()) + (ball.getRadius() * paddle.getY())) / (ball.getRadius() + paddle.getRadius());
         return y;
     }
-    public void newDX(){
-        double velocity = Math.sqrt((ball.getDX() * ball.getDX()) + (ball.getDY() * ball.getDY()));
-        double angle = Math.atan((double) ball.getDY() / ball.getDX());
-
-    }
     // Checks if a goal is scored
     public boolean isGoal(){
-        if(ball.getX() - ball.getDX() <= leftgoal.getWidth() && ball.getY() >= leftgoal.getY() && ball.getY() <= leftgoal.getLength() + leftgoal.getY()){
+        if(ball.getX() - ball.getRadius() <= leftgoal.getWidth() && ball.getY() >= leftgoal.getY() && ball.getY() <= leftgoal.getLength() + leftgoal.getY()){
             twoScore += 1;
             return true;
         }
@@ -117,15 +126,37 @@ public class AirHockey implements ActionListener, KeyListener {
         }
         return false;
     }
-    public void game(){
-        window.repaint();
+    // Source: https://ericleong.me/research/circle-circle/
+    public void collide(Paddle player){
+        int c_x = ball.getX();
+        int c_y = ball.getY();
+        int circle1dx = ball.getDx();
+        int circle1dy = ball.getDy();
+        int circle2x = player.getX();
+        int circle2y = player.getY();
+        double speed = Math.sqrt(Math.pow(circle1dx, 2) + Math.pow(circle1dy, 2));
+        double collisiondist = Math.sqrt(Math.pow(circle2x - c_x, 2) + Math.pow(circle2y - c_y, 2));
+        double n_x = (circle2x - c_x) / collisiondist;
+        double n_y = (circle2y - c_y) / collisiondist;
+        double p = 2 * (circle1dx * n_x + circle1dy * n_y);
+        double newDx = circle1dx - p * n_x - p * n_x;
+        double newDy = circle1dy - p * n_y - p * n_y;
+        double newSpeed = Math.sqrt(Math.pow(newDx, 2) + Math.pow(newDy, 2));
+        double scaleFactor = speed / newSpeed;
+        ball.setDx((int)(newDx * scaleFactor * 1.1));
+        ball.setDy((int)(newDy * scaleFactor * 1.1));
+    }
+    public boolean isWon(){
+        if(oneScore == 5 || twoScore == 5){
+            return true;
+        }
+        return false;
     }
     // Main
     public static void main(String[] args) {
         AirHockey game = new AirHockey();
         Timer clock = new Timer(SLEEP_TIME, game);
         clock.start();
-        game.game();
     }
     public Ball getBall(){
         return ball;
@@ -150,5 +181,11 @@ public class AirHockey implements ActionListener, KeyListener {
     }
     public Goal getRightGoal(){
         return rightgoal;
+    }
+    public int getOneScore(){
+        return oneScore;
+    }
+    public int getTwoScore(){
+        return twoScore;
     }
 }
