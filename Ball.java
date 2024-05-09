@@ -38,10 +38,24 @@ public class Ball {
         // Bounce off the left and right side
         if((x - radius <= 0 && dx < 0 )|| (x + radius >= AirHockeyViewer.WINDOW_WIDTH && dx > 0)){
             dx *= -1;
+            // Add speed when it bounces off the wall
+            if(dx < 0){
+                dx -= 0.3;
+            }
+            else{
+                dx += 0.3;
+            }
         }
         // bounce off the top and bottom side
         if((y - radius <= AirHockeyViewer.TITLE_BAR_HEIGHT && dy < 0) || y + radius >= AirHockeyViewer.WINDOW_HEIGHT && dy > 0){
             dy *= -1;
+            // Add speed when it bounces off the wall
+            if(dy < 0){
+                dy -= 1;
+            }
+            else{
+                dy += 1;
+            }
         }
     }
     // Getter and Setters

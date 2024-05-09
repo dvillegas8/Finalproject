@@ -5,8 +5,8 @@ public class Paddle{
     private int x;
     private int y;
     // how much the paddle is going to be moving
-    private int dx;
-    private int dy;
+    private double dx;
+    private double dy;
     // dimensions of the paddle
     private int radius;
     private Color color;
@@ -39,6 +39,8 @@ public class Paddle{
             x -= dx;
         }
     }
+    public void move(){
+    }
     public boolean isContact(int x, int y, int radius){
         double dx = (x - this.x) * (x - this.x);
         double dy = (y - this.y) * (y - this.y);
@@ -62,13 +64,13 @@ public class Paddle{
         this.y = y;
     }
     public int getDX(){
-        return dx;
+        return (int)(dx + 0.5);
     }
-    public void setDX(int dx){
+    public void setDX(double dx){
         this.dx = dx;
     }
     public int getDY(){
-        return dy;
+        return (int) (dy + 0.5);
     }
     public void setDY(int dy){
         this.dy = dy;

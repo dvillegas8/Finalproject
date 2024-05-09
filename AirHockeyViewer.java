@@ -49,6 +49,13 @@ public class AirHockeyViewer extends JFrame {
         // Draw Goals
         game.getLeftGoal().draw(g);
         game.getRightGoal().draw(g);
+        // Draw score
+        g.setColor(Color.RED);
+        g.setFont(new Font("Arial", Font.BOLD, 50));
+        g.drawString(String.valueOf(game.getOneScore()), 200, 450);
+        g.setColor(Color.BLUE);
+        g.setFont(new Font("Arial", Font.BOLD, 50));
+        g.drawString(String.valueOf(game.getTwoScore()), 650, 450);
         // draw contact point for paddle one
         if(game.getPaddleOne().isContact(game.getBall().getX(), game.getBall().getY(), game.getBall().getRadius())){
             g.setColor(Color.YELLOW);
@@ -60,6 +67,19 @@ public class AirHockeyViewer extends JFrame {
         if(game.getPaddleTwo().isContact(game.getBall().getX(), game.getBall().getY(), game.getBall().getRadius())){
             g.setColor(Color.YELLOW);
             g.fillOval((int) (game.getContactX(game.getPaddleTwo()) - 2.5), (int) (game.getContactY(game.getPaddleTwo()) - 2.5), 5, 5);
+        }
+        // Display winner
+        if(game.isWon()){
+            if(game.getOneScore() == 5){
+                g.setColor(Color.RED);
+                g.setFont(new Font("Arial", Font.BOLD, 50));
+                g.drawString(String.valueOf("Player 1 Wins!"), 270, 250);
+            }
+            else if(game.getTwoScore() == 5){
+                g.setColor(Color.BLUE);
+                g.setFont(new Font("Arial", Font.BOLD, 50));
+                g.drawString(String.valueOf("Player 2 Wins!"), 270, 250);
+            }
         }
     }
     // Getter and Setters

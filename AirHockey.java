@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.Time;
 
 public class AirHockey implements ActionListener, KeyListener {
     // Instance variables
@@ -28,8 +29,8 @@ public class AirHockey implements ActionListener, KeyListener {
         one = new Paddle(220, 240, 20, 20, 20, Color.RED);
         two = new Paddle(680, 240, 20, 20, 20, Color.BLUE);
         ball = new Ball(400, 200, 4, 4, 10, Color.WHITE);
-        leftgoal = new Goal(0, 175, 5, 165, Color.WHITE);
-        rightgoal = new Goal(AirHockeyViewer.WINDOW_WIDTH - 5, 177, 5, 165, Color.WHITE);
+        leftgoal = new Goal(0, 175, 3, 165, Color.WHITE);
+        rightgoal = new Goal(AirHockeyViewer.WINDOW_WIDTH - 3, 177, 5, 165, Color.WHITE);
         time = System.currentTimeMillis();
         timeTwo = System.currentTimeMillis();
         window = new AirHockeyViewer(this);
@@ -86,20 +87,45 @@ public class AirHockey implements ActionListener, KeyListener {
     }
     // Runs this method every 100 milliseconds
     public void actionPerformed(ActionEvent e) {
-        ball.move();
-        ball.bounce();
-        if(one.isContact(ball.getX(), ball.getY(), ball.getRadius())){
-            timeThree = System.currentTimeMillis();
-            if(timeThree - time >= 500){
-                collide(one);
-                time = timeThree;
+        if(!isWon()){
+            if(!isGoal()){
+                ball.move();
+                ball.bounce();
+                if(one.isContact(ball.getX(), ball.getY(), ball.getRadius())){
+                    timeThree = System.currentTimeMillis();
+                    if(timeThree - time >= 500){
+                        collide(one);
+                        time = timeThree;
+                    }
+                }
+                if(two.isContact(ball.getX(), ball.getY(), ball.getRadius())){
+                    timeFour = System.currentTimeMillis();
+                    if(timeFour - timeTwo >= 500){
+                        collide(two);
+                        timeTwo = timeFour;
+                    }
+                }
+                window.repaint();
             }
-        }
-        if(two.isContact(ball.getX(), ball.getY(), ball.getRadius())){
-            timeFour = System.currentTimeMillis();
-            if(timeFour - timeTwo >= 500){
-                collide(two);
-                timeTwo = timeFour;
+            else{
+                window.repaint();
+                ball.setDx(0);
+                ball.setDy(0);
+                ball.setX(200);
+                ball.setY(400);
+                window.repaint();
+                try {
+                    // to sleep 10 seconds
+                    Thread.sleep(2000);
+                } catch (InterruptedException idk) {
+                    // recommended because catching InterruptedException clears interrupt flag
+                    Thread.currentThread().interrupt();
+                    // you probably want to quit if the thread is interrupted
+                    return;
+                }
+                window.repaint();
+                ball.setDx(4);
+                ball.setDy(4);
             }
         }
         window.repaint();
@@ -116,11 +142,15 @@ public class AirHockey implements ActionListener, KeyListener {
     }
     // Checks if a goal is scored
     public boolean isGoal(){
+        // left goal
         if(ball.getX() - ball.getRadius() <= leftgoal.getWidth() && ball.getY() >= leftgoal.getY() && ball.getY() <= leftgoal.getLength() + leftgoal.getY()){
+            System.out.println("Left goal");
             twoScore += 1;
             return true;
         }
+        // right goal
         else if(ball.getX() + ball.getRadius() >= rightgoal.getX() && ball.getY() >= rightgoal.getY() && ball.getY() <= rightgoal.getY() + rightgoal.getLength()){
+            System.out.println("Right goal");
             oneScore += 1;
             return true;
         }
@@ -148,6 +178,7 @@ public class AirHockey implements ActionListener, KeyListener {
     }
     public boolean isWon(){
         if(oneScore == 5 || twoScore == 5){
+
             return true;
         }
         return false;
