@@ -39,8 +39,7 @@ public class Paddle{
             x -= dx;
         }
     }
-    public void move(){
-    }
+    // Returns true if the paddle comes into contact with the ball
     public boolean isContact(int x, int y, int radius){
         double dx = (x - this.x) * (x - this.x);
         double dy = (y - this.y) * (y - this.y);
