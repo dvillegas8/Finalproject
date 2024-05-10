@@ -20,6 +20,7 @@ public class AirHockeyViewer extends JFrame {
         this.setVisible(true);
         createBufferStrategy(2);
     }
+    // To make animation more smoother
     public void paint(Graphics g) {
         BufferStrategy bf = this.getBufferStrategy();
         if (bf == null)

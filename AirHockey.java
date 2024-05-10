@@ -85,7 +85,7 @@ public class AirHockey implements ActionListener, KeyListener {
                 break;
         }
     }
-    // Runs this method every 100 milliseconds
+    // Runs this method every 20 milliseconds
     public void actionPerformed(ActionEvent e) {
         if(!isWon()){
             if(!isGoal()){
@@ -176,9 +176,9 @@ public class AirHockey implements ActionListener, KeyListener {
         ball.setDx((int)(newDx * scaleFactor * 1.1));
         ball.setDy((int)(newDy * scaleFactor * 1.1));
     }
+    // Checks if the game has ended
     public boolean isWon(){
         if(oneScore == 5 || twoScore == 5){
-
             return true;
         }
         return false;
@@ -189,6 +189,7 @@ public class AirHockey implements ActionListener, KeyListener {
         Timer clock = new Timer(SLEEP_TIME, game);
         clock.start();
     }
+    // Getters and Setters
     public Ball getBall(){
         return ball;
     }
